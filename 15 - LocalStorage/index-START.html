@@ -34,19 +34,25 @@
     e.preventDefault();
     const text = (this.querySelector('[name=item]')).value;
     const item = {
-      text: 'Item Name',
+      text,
       done: false
     }
     items.push(item);
-
+    populateList(items, itemsList);
+    localStorage.setItem('items', JSON.stringify(items));
     this.reset();
   }
 
   function populateList(plates = [], platesList) {
     platesList.innerHTML = plates.map((plate, idx) => {
       return `
+        <li>
+          <input type="checkbox" data-index=${idx} id="item${idx}"
+        ${plate.done ? 'checked' : ''} />
+          <label for="">${plate.text}</label>
+        </li>
       `;
-    });
+    }).join('');
   }
   addItems.addEventListener('submit', addItem);
 
